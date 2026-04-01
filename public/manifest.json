@@ -1,0 +1,22 @@
+{
+  "name": "Zensei",
+  "short_name": "Zensei",
+  "description": "Level up your knowledge. Explore any topic and get explanations built for how you think.",
+  "start_url": "/explore",
+  "display": "standalone",
+  "background_color": "#131210",
+  "theme_color": "#8BAB7A",
+  "icons": [
+    {
+      "src": "/zensei-logo.png",
+      "sizes": "2480x2480",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+services:
+  app:
+    container_name: zensei-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    environment:
+      NODE_ENV: production
+      NEXTAUTH_URL: https://zensei.study
+      DATABASE_URL: file:../data/zensei.db
+    volumes:
+      - ./data:/app/data
+      - ./public/avatars:/app/public/avatars

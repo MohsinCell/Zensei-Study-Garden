@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  passwordHash   String
+  name           String
+  role           String   @default("")
+  interests      String   @default("[]")
+  learningStyle  String   @default("analogies")
+  level          String   @default("intermediate")
+  educationLevel String   @default("")
+  preferredLanguage String @default("English")
+  dailyGoal      String   @default("casual")
+  weakAreas      String   @default("")
+  currentlyLearning String @default("")
+  ageGroup       String   @default("")
+  avatar         String   @default("")
+  timezone       String   @default("UTC")
+  isDev          Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Gamification
+  xp             Int      @default(0)
+  xpLevel        Int      @default(1)
+  currentStreak  Int      @default(0)
+  longestStreak  Int      @default(0)
+  lastActiveDate String   @default("")
+  totalTopics    Int      @default(0)
+  totalExplanations Int   @default(0)
+
+  topics       Topic[]
+  insights     Insight[]
+  achievements UserAchievement[]
+}
+
+model UserAchievement {
+  id            String   @id @default(cuid())
+  achievementId String
+  unlockedAt    DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+}
+
+model Topic {
+  id        String   @id @default(cuid())
+  topic     String
+  rating    Int?
+  tags      String   @default("[]")
+  createdAt DateTime @default(now())
+
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  explanations Explanation[]
+}
+
+model Explanation {
+  id              String   @id @default(cuid())
+  type            String
+  content         String
+  tldr            String   @default("")
+  core            String   @default("")
+  analogy         String?
+  deeperDive      String?
+  example         String?
+  userQuery       String?
+  depthPreference String   @default("detailed")
+  purposeIntent   String   @default("curiosity")
+  createdAt       DateTime @default(now())
+
+  topicId String
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+}
+
+model Insight {
+  id          String   @id @default(cuid())
+  type        String
+  description String
+  evidence    String
+  createdAt   DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationCode {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  type      String   // "signup" or "signin"
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}

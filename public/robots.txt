@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /developer/
+Disallow: /avatars/
+
+Sitemap: https://zensei.study/sitemap.xml
