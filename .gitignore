@@ -53,3 +53,9 @@ Thumbs.db
 
 # tooling and local AI assistant config
 /.claude/
+
+# local deployment and uploaded runtime files
+deploy.ps1
+readme template.md
+public/avatars/*
+!public/avatars/.gitkeep
